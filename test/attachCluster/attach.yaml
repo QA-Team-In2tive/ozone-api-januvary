@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: ozone
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: ozone-service-account
+    namespace: ozone
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    name: ozone-cluster-role-binding
+roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: cluster-admin
+subjects:
+    - kind: ServiceAccount
+      name: ozone-service-account
+      namespace: ozone
+
+---
+apiVersion: v1
+data:
+    .dockerconfigjson: eyJhdXRocyI6IHsiYXNpYS5nY3IuaW8iOiB7ImF1dGgiOiAiIn19fQo=
+kind: Secret
+metadata:
+    name: ozone-registry-secret
+    namespace: ozone
+type: kubernetes.io/dockerconfigjson
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+    annotations:
+        sidecar.istio.io/inject: "false"
+    generateName: ozone-external-installer-
+    namespace: ozone
+spec:
+    template:
+        metadata:
+            annotations:
+                sidecar.istio.io/inject: "false"
+        spec:
+            containers:
+                - command:
+                    - /bin/app-agent-installer
+                  env:
+                    - name: ACCOUNT_ID
+                      value: "13"
+                    - name: REQUEST_URL
+                      value: https://sandbox.ozone.one/api/agent/installer
+                    - name: TOKEN
+                      value: qnIi5HSHZ6TPi0hYvWNdPrSSqArIoIC4m35a4cKJ5u5qiTMGpwvB4txP6iGKY0aI0pL3dSv6mQb8lsJcOUiwU5hxCDPrFtrrJeuaAUpqvS589v28skcmqsRYdNGJpHNY
+                    - name: CLUSTER_NAME
+                      value: attachze1638428114568
+                    - name: CLUSTER_TYPE
+                      value: "6"
+                    - name: WORKSPACE_ID
+                      value: "177"
+                  image: gcr.io/andromeda-288104/app-agent-installer:release-4f91c860
+                  name: ozone-external-installer
+                  resources:
+                    limits:
+                        cpu: 100m
+                        memory: 300Mi
+                    requests:
+                        cpu: 10m
+                        memory: 50Mi
+            imagePullSecrets:
+                - name: ozone-registry-secret
+            restartPolicy: Never
+            serviceAccountName: ozone-service-account
+    ttlSecondsAfterFinished: 300

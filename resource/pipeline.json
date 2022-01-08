@@ -1,0 +1,670 @@
+{
+    "conditions": [
+        {
+            "lastTransitionTime": "2021-10-28T12:48:37Z",
+            "message": "Tasks Completed: 0 (Failed: 0, Cancelled 0), Incomplete: 3, Skipped: 0",
+            "reason": "Running",
+            "status": "Unknown",
+            "type": "Succeeded"
+        }
+    ],
+    "pipelineSpec": {
+        "finally": [
+            {
+                "name": "delete-secret",
+                "taskSpec": {
+                    "description": "A task for deleting K8s objects of type secret",
+                    "metadata": {},
+                    "spec": null,
+                    "steps": [
+                        {
+                            "args": [
+                                "delete",
+                                "secret",
+                                "0274e2cb-802e-48e6-980b-125208f450e3",
+                                "-n",
+                                "ozone"
+                            ],
+                            "command": [
+                                "kubectl"
+                            ],
+                            "image": "gcr.io/andromeda-288104/lachlanevenson/k8s-kubectl:v1.18.17",
+                            "name": "secret-delete",
+                            "resources": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "params": [
+            {
+                "description": "Name of registry\n",
+                "name": "REGISTRY_NAME",
+                "type": "string"
+            },
+            {
+                "description": "Registry user\n",
+                "name": "REGISTRY_USER",
+                "type": "string"
+            },
+            {
+                "description": "Registry password\n",
+                "name": "REGISTRY_PASSWORD",
+                "type": "string"
+            },
+            {
+                "description": "Repository directory\n",
+                "name": "PROJECT_DIR",
+                "type": "string"
+            },
+            {
+                "description": "Repository user\n",
+                "name": "REPO_USER",
+                "type": "string"
+            },
+            {
+                "description": "Repository password\n",
+                "name": "REPO_PASSWORD",
+                "type": "string"
+            },
+            {
+                "description": "Repository url\n",
+                "name": "REPO_URL",
+                "type": "string"
+            },
+            {
+                "description": "Repo branch\n",
+                "name": "REPO_BRANCH",
+                "type": "string"
+            },
+            {
+                "description": "registry image name\n",
+                "name": "REGISTRY_IMAGE",
+                "type": "string"
+            },
+            {
+                "description": "image sha\n",
+                "name": "IMAGE_TAG",
+                "type": "string"
+            },
+            {
+                "description": "docker file path\n",
+                "name": "DOCKER_FILE_PATH",
+                "type": "string"
+            },
+            {
+                "description": "docker git param\n",
+                "name": "DOCKER_NETRC",
+                "type": "string"
+            },
+            {
+                "description": "docker git param\n",
+                "name": "DEPLOYMENT_NAME",
+                "type": "string"
+            },
+            {
+                "description": "deployment name\n",
+                "name": "DEPLOYMENT_NAMESPACE",
+                "type": "string"
+            },
+            {
+                "description": "container name\n",
+                "name": "CONTAINER_NAME",
+                "type": "string"
+            }
+        ],
+        "tasks": [
+            {
+                "name": "ozone-image-build-task-v1",
+                "params": [
+                    {
+                        "name": "REGISTRY_NAME",
+                        "value": "$(params.REGISTRY_NAME)"
+                    },
+                    {
+                        "name": "REGISTRY_USER",
+                        "value": "$(params.REGISTRY_USER)"
+                    },
+                    {
+                        "name": "REGISTRY_PASSWORD",
+                        "value": "$(params.REGISTRY_PASSWORD)"
+                    },
+                    {
+                        "name": "PROJECT_DIR",
+                        "value": "$(params.PROJECT_DIR)"
+                    },
+                    {
+                        "name": "REGISTRY_IMAGE",
+                        "value": "$(params.REGISTRY_IMAGE)"
+                    },
+                    {
+                        "name": "IMAGE_TAG",
+                        "value": "$(params.IMAGE_TAG)"
+                    },
+                    {
+                        "name": "DOCKER_FILE_PATH",
+                        "value": "$(params.DOCKER_FILE_PATH)"
+                    },
+                    {
+                        "name": "DOCKER_NETRC",
+                        "value": "$(params.DOCKER_NETRC)"
+                    },
+                    {
+                        "name": "REPO_USER",
+                        "value": "$(params.REPO_USER)"
+                    },
+                    {
+                        "name": "REPO_PASSWORD",
+                        "value": "$(params.REPO_PASSWORD)"
+                    },
+                    {
+                        "name": "REPO_URL",
+                        "value": "$(params.REPO_URL)"
+                    },
+                    {
+                        "name": "REPO_BRANCH",
+                        "value": "$(params.REPO_BRANCH)"
+                    }
+                ],
+                "taskSpec": {
+                    "metadata": {},
+                    "params": [
+                        {
+                            "description": "Name of registry\n",
+                            "name": "REGISTRY_NAME",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Registry user\n",
+                            "name": "REGISTRY_USER",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Registry password\n",
+                            "name": "REGISTRY_PASSWORD",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository directory\n",
+                            "name": "PROJECT_DIR",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository user\n",
+                            "name": "REPO_USER",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository password\n",
+                            "name": "REPO_PASSWORD",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository url\n",
+                            "name": "REPO_URL",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repo branch\n",
+                            "name": "REPO_BRANCH",
+                            "type": "string"
+                        },
+                        {
+                            "description": "registry image name\n",
+                            "name": "REGISTRY_IMAGE",
+                            "type": "string"
+                        },
+                        {
+                            "description": "image sha\n",
+                            "name": "IMAGE_TAG",
+                            "type": "string"
+                        },
+                        {
+                            "description": "docker file path\n",
+                            "name": "DOCKER_FILE_PATH",
+                            "type": "string"
+                        },
+                        {
+                            "description": "docker git param\n",
+                            "name": "DOCKER_NETRC",
+                            "type": "string"
+                        }
+                    ],
+                    "spec": null,
+                    "steps": [
+                        {
+                            "env": [
+                                {
+                                    "name": "REGISTRY_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REGISTRY_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DOCKER_NETRC",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "DOCKER_NETRC",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                }
+                            ],
+                            "image": "gcr.io/andromeda-288104/alpine/git:latest",
+                            "name": "git-clone",
+                            "resources": {},
+                            "script": "rm -rf $(workspaces.gitpull.path)/$(params.PROJECT_DIR)\ngit clone -b $(params.REPO_BRANCH) https://\"$REPO_USER\":\"$REPO_PASSWORD\"@$(params.REPO_URL) $(workspaces.gitpull.path)/$(params.PROJECT_DIR)\n"
+                        },
+                        {
+                            "env": [
+                                {
+                                    "name": "REGISTRY_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REGISTRY_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DOCKER_NETRC",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "DOCKER_NETRC",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                }
+                            ],
+                            "image": "gcr.io/andromeda-288104/buildah/stable:v0.0.1",
+                            "name": "buildah-build-and-push",
+                            "resources": {},
+                            "script": "sudo buildah --tls-verify=false --storage-driver=vfs login --username $REGISTRY_USER --password \"$REGISTRY_PASSWORD\" $(params.REGISTRY_NAME)\nsudo buildah bud --format=docker --isolation=chroot --cap-add SYS_ADMIN --build-arg \"DOCKER_NETRC=$DOCKER_NETRC\" --storage-driver=vfs -f $(params.DOCKER_FILE_PATH) -t result-image $(workspaces.gitpull.path)/$(inputs.params.PROJECT_DIR)\nsudo buildah --tls-verify=false --storage-driver=vfs push  localhost/result-image:latest $(params.REGISTRY_IMAGE):$(params.IMAGE_TAG)\n",
+                            "securityContext": {
+                                "privileged": true,
+                                "runAsUser": 0
+                            }
+                        }
+                    ],
+                    "workspaces": [
+                        {
+                            "description": "Where git pulls",
+                            "mountPath": "/gitpull",
+                            "name": "gitpull"
+                        }
+                    ]
+                },
+                "workspaces": [
+                    {
+                        "name": "gitpull",
+                        "workspace": "gitpull"
+                    }
+                ]
+            },
+            {
+                "name": "ozone-kubectl-set-deployment-image-task-v1",
+                "params": [
+                    {
+                        "name": "DEPLOYMENT_NAME",
+                        "value": "$(params.DEPLOYMENT_NAME)"
+                    },
+                    {
+                        "name": "DEPLOYMENT_NAMESPACE",
+                        "value": "$(params.DEPLOYMENT_NAMESPACE)"
+                    },
+                    {
+                        "name": "REGISTRY_IMAGE",
+                        "value": "$(params.REGISTRY_IMAGE)"
+                    },
+                    {
+                        "name": "IMAGE_TAG",
+                        "value": "$(params.IMAGE_TAG)"
+                    },
+                    {
+                        "name": "CONTAINER_NAME",
+                        "value": "$(params.CONTAINER_NAME)"
+                    }
+                ],
+                "runAfter": [
+                    "ozone-image-build-task-v1"
+                ],
+                "taskSpec": {
+                    "metadata": {},
+                    "params": [
+                        {
+                            "description": "App name to deploy",
+                            "name": "DEPLOYMENT_NAME",
+                            "type": "string"
+                        },
+                        {
+                            "description": "App namespace",
+                            "name": "DEPLOYMENT_NAMESPACE",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Image url",
+                            "name": "REGISTRY_IMAGE",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Image tag",
+                            "name": "IMAGE_TAG",
+                            "type": "string"
+                        },
+                        {
+                            "description": "containerName",
+                            "name": "CONTAINER_NAME",
+                            "type": "string"
+                        }
+                    ],
+                    "spec": null,
+                    "steps": [
+                        {
+                            "args": [
+                                "set",
+                                "image",
+                                "deployment",
+                                "$(params.DEPLOYMENT_NAME)",
+                                "-n",
+                                "$(params.DEPLOYMENT_NAMESPACE)",
+                                "$(params.CONTAINER_NAME)=$(params.REGISTRY_IMAGE):$(params.IMAGE_TAG)"
+                            ],
+                            "command": [
+                                "kubectl"
+                            ],
+                            "image": "gcr.io/andromeda-288104/lachlanevenson/k8s-kubectl:v1.18.17",
+                            "name": "kubectl-set-deployment-image",
+                            "resources": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "workspaces": [
+            {
+                "name": "gitpull"
+            }
+        ]
+    },
+    "startTime": "2021-10-28T12:48:37Z",
+    "taskRuns": {
+        "ozone-git-pull-docker-image-build-a-uquoblgcvg-ozone-imag-6xnj6": {
+            "pipelineTaskName": "ozone-image-build-task-v1",
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2021-10-28T12:48:43Z",
+                        "message": "Not all Steps in the Task have finished executing",
+                        "reason": "Running",
+                        "status": "Unknown",
+                        "type": "Succeeded"
+                    }
+                ],
+                "podName": "ozone-git-pull-docker-image-build-a-uquoblgcvg-ozone-imag-5jgn9",
+                "startTime": "2021-10-28T12:48:37Z",
+                "steps": [
+                    {
+                        "container": "step-git-clone",
+                        "imageID": "docker-pullable://gcr.io/andromeda-288104/alpine/git@sha256:426e129b37e0bfbe18acff5ad895e4165d9aa2e07441e07b59b809c95815270a",
+                        "name": "git-clone",
+                        "terminated": {
+                            "containerID": "docker://d47cfab19d684b24edad46a063904e5f9a6691ea766b2fd2bdd3e20d8a50304c",
+                            "exitCode": 0,
+                            "finishedAt": "2021-10-28T12:48:44Z",
+                            "reason": "Completed",
+                            "startedAt": "2021-10-28T12:48:43Z"
+                        }
+                    },
+                    {
+                        "container": "step-buildah-build-and-push",
+                        "imageID": "docker-pullable://gcr.io/andromeda-288104/buildah/stable@sha256:98bfe9952946fbe3de87649a9496ab23b1b999ebf9eb6f86e7b63d84eac3fff3",
+                        "name": "buildah-build-and-push",
+                        "running": {
+                            "startedAt": "2021-10-28T12:48:42Z"
+                        }
+                    }
+                ],
+                "taskSpec": {
+                    "params": [
+                        {
+                            "description": "Name of registry\n",
+                            "name": "REGISTRY_NAME",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Registry user\n",
+                            "name": "REGISTRY_USER",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Registry password\n",
+                            "name": "REGISTRY_PASSWORD",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository directory\n",
+                            "name": "PROJECT_DIR",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository user\n",
+                            "name": "REPO_USER",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository password\n",
+                            "name": "REPO_PASSWORD",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repository url\n",
+                            "name": "REPO_URL",
+                            "type": "string"
+                        },
+                        {
+                            "description": "Repo branch\n",
+                            "name": "REPO_BRANCH",
+                            "type": "string"
+                        },
+                        {
+                            "description": "registry image name\n",
+                            "name": "REGISTRY_IMAGE",
+                            "type": "string"
+                        },
+                        {
+                            "description": "image sha\n",
+                            "name": "IMAGE_TAG",
+                            "type": "string"
+                        },
+                        {
+                            "description": "docker file path\n",
+                            "name": "DOCKER_FILE_PATH",
+                            "type": "string"
+                        },
+                        {
+                            "description": "docker git param\n",
+                            "name": "DOCKER_NETRC",
+                            "type": "string"
+                        }
+                    ],
+                    "steps": [
+                        {
+                            "env": [
+                                {
+                                    "name": "REGISTRY_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REGISTRY_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DOCKER_NETRC",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "DOCKER_NETRC",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                }
+                            ],
+                            "image": "gcr.io/andromeda-288104/alpine/git:latest",
+                            "name": "git-clone",
+                            "resources": {},
+                            "script": "rm -rf $(workspaces.gitpull.path)/$(params.PROJECT_DIR)\ngit clone -b $(params.REPO_BRANCH) https://\"$REPO_USER\":\"$REPO_PASSWORD\"@$(params.REPO_URL) $(workspaces.gitpull.path)/$(params.PROJECT_DIR)\n"
+                        },
+                        {
+                            "env": [
+                                {
+                                    "name": "REGISTRY_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REGISTRY_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REGISTRY_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "DOCKER_NETRC",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "DOCKER_NETRC",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_USER",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_USER",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "REPO_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "REPO_PASSWORD",
+                                            "name": "0274e2cb-802e-48e6-980b-125208f450e3"
+                                        }
+                                    }
+                                }
+                            ],
+                            "image": "gcr.io/andromeda-288104/buildah/stable:v0.0.1",
+                            "name": "buildah-build-and-push",
+                            "resources": {},
+                            "script": "sudo buildah --tls-verify=false --storage-driver=vfs login --username $REGISTRY_USER --password \"$REGISTRY_PASSWORD\" $(params.REGISTRY_NAME)\nsudo buildah bud --format=docker --isolation=chroot --cap-add SYS_ADMIN --build-arg \"DOCKER_NETRC=$DOCKER_NETRC\" --storage-driver=vfs -f $(params.DOCKER_FILE_PATH) -t result-image $(workspaces.gitpull.path)/$(inputs.params.PROJECT_DIR)\nsudo buildah --tls-verify=false --storage-driver=vfs push  localhost/result-image:latest $(params.REGISTRY_IMAGE):$(params.IMAGE_TAG)\n",
+                            "securityContext": {
+                                "privileged": true,
+                                "runAsUser": 0
+                            }
+                        }
+                    ],
+                    "workspaces": [
+                        {
+                            "description": "Where git pulls",
+                            "mountPath": "/gitpull",
+                            "name": "gitpull"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

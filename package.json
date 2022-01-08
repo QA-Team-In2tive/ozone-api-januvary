@@ -1,0 +1,69 @@
+{
+  "name": "ozone-api-automation",
+  "version": "1.0.0",
+  "description": "This repository create for API automation in ozone panel",
+  "main": "index.js",
+  "scripts": {  
+    "test1": "mocha --timeout 600000 --bail",
+    "test": "test/run.sh",
+    "provider": "test/providers/run.sh",
+    "repository": "test/repositories/run.sh",
+    "registry": "test/registries/run.sh",
+    "pipelinetask": "test/pipelineAndTasks/run.sh",
+    "deployconfig": "test/deploymentConfig/run.sh",
+    "resource": "test/resource/run.sh",
+    "governance": "test/governance/run.sh",
+    "runaws": "ozone/runaws/run.sh",
+    "rungcp": "ozone/rungcp/run.sh",
+    "runazure": "ozone/runazure/run.sh",
+    "deploy": "ozone/deployapp/run.sh",
+    "helmrelease": "ozone/helmrelease/run.sh",
+    "allwebhook": "ozone/webhook/run.sh",
+    "dockerhub": "ozone/dockerhub/run.sh",
+    "harbor": "ozone/harborregistry/run.sh",
+    "jfrog": "ozone/jfrog/run.sh",
+    "deletecluster": "test/attachCluster/attach.sh",
+    "pipeline": "test/pipelines/run.sh",
+    "security": "ozone/securityPipelines/run.sh",
+    "rerun": "test/pipelines/rerunPipeline/run.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/in2tivetech/ozone-api-automation.git"
+  },
+  "keywords": [],
+  "author": "In2tive",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/in2tivetech/ozone-api-automation/issues"
+  },
+  "homepage": "https://github.com/in2tivetech/ozone-api-automation#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/register": "^7.13.14",
+    "ajv": "^8.0.5",
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
+    "mocha-junit-reporter": "^2.0.0",
+    "mochawesome": "^6.2.2",
+    "supertest": "^6.1.3"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@octokit/core": "^3.5.1",
+    "chai-json-schema-ajv": "^5.2.3",
+    "dotenv": "^8.2.0",
+    "faker": "^5.5.2",
+    "js-yaml": "^4.1.0",
+    "json-to-pretty-yaml": "^1.2.2",
+    "log4js": "^6.3.0",
+    "mocha-multi-reporters": "^1.5.1",
+    "mocha-report-log": "0.0.4",
+    "mochawesome-report-generator": "^5.2.0",
+    "sinon": "^10.0.0",
+    "spec": "^1.0.1"
+  }
+}
